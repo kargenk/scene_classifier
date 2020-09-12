@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from math import degrees
+from PIL.ImageEnhance import Color
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from torchvision import transforms
+from torchvision.transforms.transforms import CenterCrop, ColorJitter, RandomRotation
 
 
 class ImageTransform():
@@ -26,14 +29,17 @@ class ImageTransform():
         self.data_transform = {
             'train': transforms.Compose([
                 transforms.RandomResizedCrop(
-                    resize, scale=(0.5, 1.0)),
+                    size=256, scale=(0.8, 1.0)),
+                transforms.RandomRotation(degrees=15),
+                transforms.ColorJitter(),
                 transforms.RandomHorizontalFlip(),
+                transforms.CenterCrop(size=resize),
                 transforms.ToTensor(),
                 transforms.Normalize(mean, std),
             ]),
             'val': transforms.Compose([
-                transforms.Resize(resize),
-                transforms.CenterCrop(resize),
+                transforms.Resize(size=256),
+                transforms.CenterCrop(size=resize),
                 transforms.ToTensor(),
                 transforms.Normalize(mean, std),
             ])
@@ -51,7 +57,7 @@ class ImageTransform():
 
 if __name__ == '__main__':
     # 画像の読み込み
-    image_file_path = './data/交差点/img_0.jpg'
+    image_file_path = './data/交差点/train/img_0.jpg'
     img = Image.open(image_file_path)
 
     # 元画像の表示
