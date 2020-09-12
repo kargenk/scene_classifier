@@ -25,11 +25,13 @@ def img_download(srcs, save_dir, maximum):
     print("Downloading...")
     for idx, src in enumerate(srcs[:maximum]):
         if idx % 50 == 0 or idx == len(srcs)-1:
-            print("|" + ("■" * (20 * idx // (len(srcs)-1))) + (" -" * (20 - 20 * idx //
-                                                                       (len(srcs)-1))) + "|", f"{100*idx//(len(srcs)-1)}%")  # ダウンロードの進捗示すやつ
+            # ダウンロードの進捗
+            done = ("■" * (20 * idx // (len(srcs) - 1)))
+            rest = (" -" * (20 - 20 * idx // (len(srcs) - 1)))
+            print("|" + done + rest + "|", f"{100 * idx // (len(srcs) - 1)}%")
         file_path = os.path.join(save_dir, 'img_' + str(idx) + '.jpg')
         src = src.get_attribute("src")
-        if src != None:
+        if src:
             # 画像に変換--
             if "base64," in src:
                 with open(file_path, "wb") as f:
@@ -54,8 +56,8 @@ def img_search(query, driver):
     try:
         driver.find_element_by_class_name(
             "mye4qd").click()  # 「検索結果をもっと表示」ってボタンを押してる
-    except:
-        pass
+    except Exception as e:
+        print(e)
     for t in range(5):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         time.sleep(1.5)

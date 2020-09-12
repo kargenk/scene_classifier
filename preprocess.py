@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from math import degrees
-from PIL.ImageEnhance import Color
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from torchvision import transforms
-from torchvision.transforms.transforms import CenterCrop, ColorJitter, RandomRotation
 
 
 class ImageTransform():
