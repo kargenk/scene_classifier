@@ -14,7 +14,7 @@ TRT_LOGGER = trt.Logger(trt.Logger.INFO)
 def torch2onnx(save_onnx_path, net):
     """ torchのモデルをONNX形式に変換． """
 
-    dummy_input = torch.randn(1, 16, 3, 224, 224, device=device)
+    dummy_input = torch.randn(1, 3, 224, 224, device=device)
     input_names = ['input_1']
     output_names = ['output_1']
 
@@ -37,7 +37,7 @@ def build_trt_engine(onnx_model_path, engine_path):
     parser = trt.OnnxParser(network, TRT_LOGGER)
 
     # 各種設定
-    builder.max_workspace_size = 1 << 30  # 1GB，TensorRTエンジンで使用するGPUメモリの最大値
+    builder.max_workspace_size = 1 << 30  # 2GB，TensorRTエンジンで使用するGPUメモリの最大値
     builder.max_batch_size = 1            # バッチサイズ
     # builder.fp16_mode = True              # fp16を用いる場合(デフォルトはINT8)，ビルド時間は伸びる
 
@@ -61,6 +61,7 @@ def build_trt_engine(onnx_model_path, engine_path):
     # TensorRTエンジンの保存
     with open(engine_path, 'wb') as f:
         f.write(engine.serialize())
+        print('Completed saving TRT engine')
 
 
 if __name__ == '__main__':

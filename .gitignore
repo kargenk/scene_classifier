@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# dataset
+data/
+models/
+
+.vscode/
+download.py
+image_collector.py
