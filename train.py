@@ -32,21 +32,6 @@ def get_model4tl():
     net.train()
     print('学習済み重みをロードし，訓練モードに設定しました')
 
-    # # 転移学習で学習させるパラメータ
-    # params_to_update = []
-
-    # # 学習させるパラメータ以外は勾配計算をなくし，変化しないように設定
-    # for name, param in net.named_parameters():
-    #     if name in target_params:
-    #         param.requires_grad = True
-    #         params_to_update.append(param)
-    #         print(name)
-    #     else:
-    #         param.requires_grad = False
-
-    # print('-' * 20)
-    # print(params_to_update)
-
     return net
 
 
