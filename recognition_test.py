@@ -32,8 +32,7 @@ net.load_state_dict(load_weights)
 net.eval()  # 推論モード
 
 # 画像の読み込み
-image_file_path = './data/商店街/val/img_815.jpg'  # テスト画像
-# image_file_path = './data/ミリシタ/img_1.jpg'  # 以外
+image_file_path = './data/buildings/val/20057.jpg'  # テスト画像, street: 20080.jpg
 img = Image.open(image_file_path)
 
 # 前処理
@@ -45,9 +44,9 @@ img_transformed = transform(img, phase='val')
 # print(output)
 # _, pred_id = torch.max(output, dim=1)
 # if pred_id == 0:
-#     print('pred: 交差点')
+#     print('pred: buildings')
 # elif pred_id == 1:
-#     print('pred: 商店街')
+#     print('pred: street')
 
 # # 元画像と前処理後画像の表示
 # plt.imshow(img)
@@ -88,11 +87,11 @@ while cap.isOpened():
     pred_class = ''
     _, pred_id = torch.max(output, dim=1)
     if pred_id == 0:
-        pred_class = 'intersection'
-        print('pred: 交差点')
+        pred_class = 'buildings'
+        print('pred:', pred_class)
     elif pred_id == 1:
-        pred_class = 'shopping street'
-        print('pred: 商店街')
+        pred_class = 'street'
+        print('pred:', pred_class)
 
     if count == max_count:
         tm.stop()

@@ -54,7 +54,7 @@ class ImageTransform():
 
 if __name__ == '__main__':
     # 画像の読み込み
-    image_file_path = './data/交差点/train/img_0.jpg'
+    image_file_path = './data/buildings/train/4.jpg'
     img = Image.open(image_file_path)
 
     # 元画像の表示

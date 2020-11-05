@@ -11,7 +11,7 @@ from preprocess import ImageTransform
 
 class SceneDataset(Dataset):
     """
-    シーン画像(交差点，商店街)のデータセットクラス．
+    シーン画像(buildings，street)のデータセットクラス．
 
     Attributes
     ----------
@@ -42,15 +42,15 @@ class SceneDataset(Dataset):
 
         # 画像ラベルをフォルダ名から抜き出して数値化
         label = img_path.split('/')[2]
-        if label == '交差点':
+        if label == 'buildings':
             label = 0
-        elif label == '商店街':
+        elif label == 'street':
             label = 1
 
         return img_transformed, label
 
 
-def make_datapath_list(phase='train'):
+def make_datapath_list(phase='train', data_dir='./data/*/'):
     """
     データへのパスを格納したリストを作成する関数．
 
@@ -65,7 +65,6 @@ def make_datapath_list(phase='train'):
         データへのパスを格納したリスト
     """
 
-    data_dir = './data/*/'
     target_path = os.path.join(data_dir + phase + '/*.jpg')
     print(target_path)
 
@@ -93,7 +92,7 @@ if __name__ == '__main__':
     train_dataset = SceneDataset(train_list, image_transform, 'train')
     val_dataset = SceneDataset(val_list, image_transform, 'val')
     print(train_dataset.__getitem__(index)[0].shape)  # Size([3, 224, 224])
-    print(train_dataset.__getitem__(index)[1])        # 0:交差点
+    print(train_dataset.__getitem__(index)[1])        # 0: buildings
 
     # Dataloaderのテスト
     batch_size = 32
@@ -103,5 +102,5 @@ if __name__ == '__main__':
 
     batch_iterator = iter(dataloaders_dict['train'])
     inputs, labels = next(batch_iterator)
-    print(inputs.shape)
+    print(inputs.shape)  # Size([b=32, 3, 224, 224])
     print(labels)

@@ -43,7 +43,7 @@ def train(net, dataloaders_dict, criterion, optimizer, num_epochs):
     # ネットワークがある程度固定であれば，高速化させる
     torch.backends.cudnn.benchmark = True
 
-    for epoch in range(1, num_epochs+1):
+    for epoch in range(1, num_epochs + 1):
         print('Epoch {}/{}'.format(epoch, num_epochs))
         print('-' * 20)
 
@@ -121,4 +121,4 @@ if __name__ == '__main__':
     optimizer = optim.Adam(params=net.parameters(), lr=1e-4)
 
     # 訓練
-    train(net, dataloaders_dict, criterion, optimizer, num_epochs=2)
+    train(net, dataloaders_dict, criterion, optimizer, num_epochs=50)
